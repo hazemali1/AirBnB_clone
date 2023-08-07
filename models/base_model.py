@@ -16,7 +16,7 @@ class BaseModel:
         Instantiation
         """
         if kwarg:
-            format_data = "%y/%m/%d %H:%M:%S.%f"
+            format_data = "%y-/%m-/%dT%H:%M:%S.%f"
             for k, v in kwargs.items():
                 if k == "__class__":
                     continue
