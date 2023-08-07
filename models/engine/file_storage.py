@@ -3,7 +3,7 @@
 FileStorage class
 """
 import json
-
+from models.base_model import BaseModel
 
 class FileStorage:
     """
@@ -13,13 +13,27 @@ class FileStorage:
     __objects = {}
 
     def all(self):
-        return self.__objects
+        return FileStorage.__objects
 
     def new(self, obj):
         s = obj.__class__.__name__
         d = obj.id
-        __objects["{}.{}".format(s, d)] = obj
+        FileStorage.__objects["{}.{}".format(s, d)] = obj
 
     def save(self):
-        with open(self.__file_path, "w") as f:
-            json.dump(self.__objects, f)
+        b = {}
+        for k, v in FileStorage.__objects.items():
+            b[k] = v.to_dict()
+        with open(FileStorage.__file_path, "w") as f:
+            json.dump(z, f)
+
+    def reload(self):
+        try:
+            with open(FileStorage.__file_path) as k:
+                a = json.load(k)
+            m = a.values()
+            for v in a.values():
+                del v["__class__"]
+                self.new(m)
+        except FileNotFoundError:
+            return
