@@ -5,6 +5,7 @@ FileStorage class
 import json
 from models.base_model import BaseModel
 
+
 class FileStorage:
     """
     define some method and attributes
@@ -13,27 +14,35 @@ class FileStorage:
     __objects = {}
 
     def all(self):
-        return FileStorage.__objects
+        """
+        returns the dictionary __objects
+        """
+        return self.__objects
 
     def new(self, obj):
-        s = obj.__class__.__name__
-        d = obj.id
-        FileStorage.__objects["{}.{}".format(s, d)] = obj
+        """
+        sets in __objects the obj with key <obj class name>.id
+        """
+        FileStorage.__objects["{}.{}".format(obj.__class__.__name__,
+                                             obj.id)] = obj
 
     def save(self):
-        b = {}
+        """
+        serializes __objects to the JSON file (path: __file_path)
+        """
+        dict1 = {}
         for k, v in FileStorage.__objects.items():
-            b[k] = v.to_dict()
-        with open(FileStorage.__file_path, "w") as f:
-            json.dump(z, f)
+            dict1[k] = v.to_dict()
+        with open(FileStorage.__file_path, "w", encoding="UTF-8") as f:
+            json.dump(dict1, f)
 
     def reload(self):
         try:
-            with open(FileStorage.__file_path) as k:
-                a = json.load(k)
-            m = a.values()
-            for v in a.values():
-                del v["__class__"]
-                self.new(m)
+            with open(FileStorage.__file_path) as file:
+                data = json.load(file)
+            for key, value in data.items():
+                class_name = value["__class__"]
+                if class_name == "BaseModel":
+                    FileStorage.__objects[key] = BaseModel(**value)
         except FileNotFoundError:
             return
