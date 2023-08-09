@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-MOdule with class User
+Module with class User
 """
 from models.base_model import BaseModel
 
