@@ -39,7 +39,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             s = BaseModel()
             s.save()
-            print (s.id)
+            print(s.id)
 
     def do_show(self, arg):
         """Show obj
@@ -52,7 +52,7 @@ class HBNBCommand(cmd.Cmd):
         elif q[0] != "BaseModel":
             print("** class doesn't exist **")
         elif len(q) == 1:
-            print ("** instance id missing **")
+            print("** instance id missing **")
         else:
             for k, v in date_base.items():
                 if v.id == q[1]:
@@ -71,7 +71,7 @@ class HBNBCommand(cmd.Cmd):
         elif q[0] != "BaseModel":
             print("** class doesn't exist **")
         elif len(q) == 1:
-            print ("** instance id missing **")
+            print("** instance id missing **")
         else:
             for k, v in date_base.items():
                 if v.id == q[1]:
@@ -87,7 +87,7 @@ class HBNBCommand(cmd.Cmd):
         q = arg.split()
         date_base = storage.all()
         if arg and q[0] != "BaseModel":
-            print ("** class doesn't exist **")
+            print("** class doesn't exist **")
         elif arg and q[0] == "BaseModel":
             z = []
             for v in date_base.values():
@@ -99,6 +99,7 @@ class HBNBCommand(cmd.Cmd):
             for v in date_base.values():
                 z.append(str(v))
             print(z)
+
     def do_update(self, arg):
         """Update"""
         q = arg.replace('"', ' ').replace("'", ' ').split()
@@ -129,7 +130,6 @@ class HBNBCommand(cmd.Cmd):
         if len(q) > 3:
             p = 1
             v = str(q[3])
-            print(v)
             if q[3].isdigit():
                 v = int(q[3])
                 p = 2
