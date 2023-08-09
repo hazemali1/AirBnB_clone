@@ -4,6 +4,8 @@ FileStorage class
 """
 import json
 from models.base_model import BaseModel
+from models.user import User
+class_dict = {"BaseModel" : BaseModel, "User" : User}
 
 
 class FileStorage:
@@ -48,7 +50,8 @@ class FileStorage:
                 data = json.load(file)
             for key, value in data.items():
                 class_name = value["__class__"]
-                if class_name == "BaseModel":
-                    FileStorage.__objects[key] = BaseModel(**value)
+                for i, j in class_dict.items():
+                    if class_name == i:
+                        FileStorage.__objects[key] = j(**value)
         except FileNotFoundError:
             return
