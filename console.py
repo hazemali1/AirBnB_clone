@@ -2,11 +2,14 @@
 """
 commands
 """
+import json
+import re
 import cmd
 from models import storage
 from models.engine.file_storage import class_dict
 from models.base_model import BaseModel
 from models.user import User
+
 
 class HBNBCommand(cmd.Cmd):
     """
@@ -18,70 +21,55 @@ class HBNBCommand(cmd.Cmd):
         """
         Default
         """
-        p = arg.split(".")
-        if len(p) > 1:
-            q = p[1].split("(")
-            if len(q) > 1:
-                if q[0] == 'all':
-                    self.do_all(p[0])
-                elif q[0] == 'count':
-                    self.do_count(p[0])
-                elif q[0] == 'show':
-                    a = ""
-                    a = a + p[0]
-                    a = a + " "
-                    b = q[1].split('"')
-                    if len(b) > 1:
-                        a = a + str(b[1])
-                    self.do_show(a)
-                elif q[0] == 'destroy':
-                    a = ""
-                    a = a + p[0]
-                    a = a + " "
-                    b = q[1].split('"')
-                    if len(b) > 1:
-                        a = a + str(b[1])
-                    self.do_destroy(a)
-                elif q[0] == 'update':
-                    a = ""
-                    a = a + p[0]
-                    a = a + " "
-                    b = p[1].replace(':', ',').replace('(', '"').replace(')', '"').split(",")
-                    b = str(b).replace(',', '"').replace("'", '"').replace('}', '"').replace('{', '"').replace(' ', '"').replace('[', '"').replace(']', '"').replace('update', '"').split('"')
-                    x = 0
-                    for i in b:
-                        if len(i) > 0:
-                            x += 1
-                    if x <= 3:
-                        for i in b:
-                            if len(i) > 0:
-                                a = a + i
-                                a = a + " "
-                        self.do_update(a)
-                    else:
-                        l = []
-                        for s in b:
-                            if len(s) > 0:
-                                l.append(s)
-                        a = a + l[0]
-                        x = x / 2
-                        w = 1
-                        a = a + " "
-                        for i in range(int(x)):
-                            n = a
-                            r = 2
-                            while r > 0:
-                                n = n + l[w]
-                                n = n + " "
-                                r -= 1
-                                w += 1
-                            self.do_update(n)
-                else:
-                    print("*** Unknown syntax: {}".format(arg))
-            else:
-                print("*** Unknown syntax: {}".format(arg))
-        else:
+        params_pattern = r"""^"([^"]+)"(?:,\s*(?:"([^"]+)"|
+        (\{[^}]+\}))(?:,\s*(?:("?[^"]+"?)))?)?"""
+        m_dict_pattern = r'"[^"]+"\s*,\s*{[^}]+}'
+        s_dict_pattern = r',\s+(?={)'
+        s_str_pattern = r',\s*'
+        cmd_arg = re.match(r"^([A-Za-z]+)\.([a-z]+)\(([^(]*)\)", arg)
+        if not cmd_arg:
             print("*** Unknown syntax: {}".format(arg))
+            return
+        cmd_arg = re.split(r"^([A-Za-z]+)\.([a-z]+)\(([^(]*)\)", arg)
+        cls_name, cmd_method, method_param = cmd_arg[1], cmd_arg[2], cmd_arg[3]
+        method_param_str = "".join(method_param)
+        params = re.match(params_pattern, method_param_str)
+        cmd_str = "".join([cls_name])
+        if params:
+            cmd_str = cmd_str + " " + method_param_str
+        if cmd_method == 'all':
+            return self.do_all(cmd_str)
+
+        if cmd_method == 'count':
+            return self.do_count(cmd_str)
+
+        if cmd_method == 'show':
+            return self.do_show(cmd_str.replace('"', ""))
+
+        if cmd_method == 'destroy':
+            return self.do_destroy(cmd_str.replace('"', ""))
+
+        if cmd_method == 'update':
+            if re.match(m_dict_pattern, method_param):
+                cmd_s_d = re.split(s_dict_pattern, method_param)
+                cls_id = cmd_s_d[0].replace('"', "")
+                cls_dict = json.loads(cmd_s_d[1].replace("'", '"'))
+                for k, v in cls_dict.items():
+                    cmd_full = cls_name + " " + cls_id + " " + k + " " + str(v)
+                    self.do_update(cmd_full)
+            else:
+                cmd_s_d = re.split(s_str_pattern, method_param)
+                cls_id = cmd_s_d[0].replace('"', "")
+                cmd_full = ""
+                if cls_name:
+                    cmd_full = cls_name + " "
+                if cls_id:
+                    cmd_full += cls_id + " "
+                if len(cmd_s_d) > 1:
+                    cmd_full += cmd_s_d[1] + " "
+                if len(cmd_s_d) > 2:
+                    cmd_full += cmd_s_d[2] + " "
+                self.do_update(cmd_full)
 
     def do_count(self, arg):
         """
