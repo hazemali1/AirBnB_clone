@@ -40,16 +40,16 @@ class HBNBCommand(cmd.Cmd):
         if cmd_method == 'all':
             return self.do_all(cmd_str)
 
-        if cmd_method == 'count':
+        elif cmd_method == 'count':
             return self.do_count(cmd_str)
 
-        if cmd_method == 'show':
+        elif cmd_method == 'show':
             return self.do_show(cmd_str.replace('"', ""))
 
-        if cmd_method == 'destroy':
+        elif cmd_method == 'destroy':
             return self.do_destroy(cmd_str.replace('"', ""))
 
-        if cmd_method == 'update':
+        elif cmd_method == 'update':
             if re.match(m_dict_pattern, method_param):
                 cmd_s_d = re.split(s_dict_pattern, method_param)
                 cls_id = cmd_s_d[0].replace('"', "")
@@ -70,6 +70,8 @@ class HBNBCommand(cmd.Cmd):
                 if len(cmd_s_d) > 2:
                     cmd_full += cmd_s_d[2] + " "
                 self.do_update(cmd_full)
+        else:
+            print("*** Unknown syntax: {}".format(arg))
 
     def do_count(self, arg):
         """
@@ -83,14 +85,12 @@ class HBNBCommand(cmd.Cmd):
         print(c)
 
     def do_quit(self, arg):
-        """
-        Quit command to exit the program
+        """Quit command to exit the program
         """
         return True
 
     def do_EOF(self, arg):
-        """
-        EOF command to exit the program
+        """EOF command to exit the program
         """
         print("")
         return True
