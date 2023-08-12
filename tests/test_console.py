@@ -231,5 +231,128 @@ class TestHBNBCommand_create(unittest.TestCase):
             self.assertIn(key_name, storage.all().keys())
 
 
+class TestHBNBCommand_show(unittest.TestCase):
+    """Unittests for show cmd of the HBNB command interpreter"""
+
+    def setUp(self):
+        try:
+            os.rename("file.json", "tmp")
+        except IOError:
+            pass
+        FileStorage._FileStorage__objects = {}
+
+    def tearDown(self):
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+        try:
+            os.rename("tmp", "file.json")
+        except IOError:
+            pass
+
+    def test_show_missing_class(self):
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("show"))
+            self.assertEqual("** class name missing **",
+                             output.getvalue().strip())
+
+    def test_show_invalid_class_name(self):
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("show MyModel"))
+            self.assertEqual("** class doesn't exist **",
+                             output.getvalue().strip())
+
+    def test_show_missing_class_id(self):
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd('User.show()'))
+            self.assertEqual("** instance id missing **",
+                             output.getvalue().strip())
+    
+    def test_show_invalid_class_id(self):
+        with patch("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd('User.show("1")'))
+            self.assertEqual("** no instance found **",
+                             output.getvalue().strip())
+    
+    def test_show_class_user(self):
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("create User")
+            cls_id = output.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("all User")
+            user_dict = output.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd('User.show("{}")'.format(cls_id))
+            self.assertIn(output.getvalue().strip(), user_dict)
+
+    def test_show_class_BaseModel(self):
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("create BaseModel")
+            cls_id = output.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("all BaseModel")
+            user_dict = output.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd('BaseModel.show("{}")'.format(cls_id))
+            self.assertIn(output.getvalue().strip(), user_dict)
+
+    def test_show_class_Place(self):
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("create Place")
+            cls_id = output.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("all Place")
+            user_dict = output.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd('Place.show("{}")'.format(cls_id))
+            self.assertIn(output.getvalue().strip(), user_dict)
+
+    def test_show_class_State(self):
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("create State")
+            cls_id = output.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("all State")
+            user_dict = output.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd('State.show("{}")'.format(cls_id))
+            self.assertIn(output.getvalue().strip(), user_dict)
+
+    def test_show_class_City(self):
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("create City")
+            cls_id = output.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("all City")
+            user_dict = output.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd('City.show("{}")'.format(cls_id))
+            self.assertIn(output.getvalue().strip(), user_dict)
+
+    def test_show_class_Amenity(self):
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("create Amenity")
+            cls_id = output.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("all Amenity")
+            user_dict = output.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd('Amenity.show("{}")'.format(cls_id))
+            self.assertIn(output.getvalue().strip(), user_dict)
+
+    def test_show_class_Review(self):
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("create Review")
+            cls_id = output.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd("all Review")
+            user_dict = output.getvalue().strip()
+        with patch("sys.stdout", new=StringIO()) as output:
+            HBNBCommand().onecmd('Review.show("{}")'.format(cls_id))
+            self.assertIn(output.getvalue().strip(), user_dict)
+
+
+
 if __name__ == "__main__":
     unittest.main()
