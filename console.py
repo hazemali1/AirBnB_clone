@@ -18,8 +18,7 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
     def default(self, arg):
-        """
-        Default
+        """Default
         """
         params_pattern = r"""^"([^"]+)"(?:,\s*(?:"([^"]+)"|
         (\{[^}]+\}))(?:,\s*(?:("?[^"]+"?)))?)?"""
@@ -74,9 +73,7 @@ class HBNBCommand(cmd.Cmd):
             print("*** Unknown syntax: {}".format(arg))
 
     def do_count(self, arg):
-        """
-        Count instances of class
-        """
+        """Count instances of class"""
         q = arg.split()
         c = 0
         for v in storage.all().values():
@@ -85,26 +82,20 @@ class HBNBCommand(cmd.Cmd):
         print(c)
 
     def do_quit(self, arg):
-        """Quit command to exit the program
-        """
+        """Quit command to exit the program"""
         return True
 
     def do_EOF(self, arg):
-        """EOF command to exit the program
-        """
+        """EOF command to exit the program"""
         print("")
         return True
 
     def emptyline(self):
-        """
-        empty line
-        """
+        """empty line"""
         pass
 
     def do_create(self, arg):
-        """
-        create new instance
-        """
+        """create new instance"""
         if not arg:
             print("** class name missing **")
         elif arg not in class_dict.keys():
@@ -117,9 +108,7 @@ class HBNBCommand(cmd.Cmd):
             print(s.id)
 
     def do_show(self, arg):
-        """
-        Show obj
-        """
+        """show obj"""
         q = arg.split()
         date_base = storage.all()
         b = 1
@@ -138,7 +127,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_destroy(self, arg):
-        """destroyy"""
+        """destroy"""
         q = arg.split()
         date_base = storage.all()
         b = 1
@@ -159,7 +148,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_all(self, arg):
-        """print Alll"""
+        """print All"""
         q = arg.split()
         date_base = storage.all()
         if arg and q[0] not in class_dict.keys():
@@ -222,3 +211,4 @@ class HBNBCommand(cmd.Cmd):
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
+ 
