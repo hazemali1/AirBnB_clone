@@ -13,6 +13,7 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 import os
+import json
 
 
 class Test_for_file_stoarge(unittest.TestCase):
@@ -260,6 +261,38 @@ class Test_for_file_stoarge(unittest.TestCase):
         models.storage.reload()
         obj = FileStorage._FileStorage__objects
         self.assertIn("Review." + s.id, obj)
+
+    def test_for_add_obj(self):
+        """
+        add object
+        """
+        s = BaseModel()
+        models.storage.new(s)
+        d = "{}.{}".format(s.__class__.__name__, s.id)
+        self.assertIn(d, models.storage.all())
+
+    def test_for_file_json(self):
+        """
+        json file
+        """
+        s = BaseModel()
+        models.storage.new(s)
+        models.storage.save()
+        with open("file.json", "r") as d:
+            q = json.load(d)
+            w = "{}.{}".format(s.__class__.__name__, s.id)
+            self.assertIn(w, q)
+
+    def test_for_reload_file(self):
+        """
+        reload file
+        """
+        s = BaseModel()
+        models.storage.new(s)
+        models.storage.save()
+        models.storage.reload()
+        d = "{}.{}".format(s.__class__.__name__, s.id)
+        self.assertIn(d, models.storage.all())
 
 
 if __name__ == "__main__":
