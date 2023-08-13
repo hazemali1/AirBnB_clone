@@ -12,12 +12,20 @@ from models.place import Place
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+import os
 
 
 class Test_for_file_stoarge(unittest.TestCase):
     """
     class testing filestorage
     """
+
+    def test_for_type_storage(self):
+        """
+        type stoarge
+        """
+        self.assertEqual(type(models.storage), FileStorage)
+
     def test_for_file_path_type(self):
         """
         file_path type
