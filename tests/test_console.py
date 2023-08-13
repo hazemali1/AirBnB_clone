@@ -400,6 +400,7 @@ class TestHBNBCommand_all(unittest.TestCase):
     """Unittests for all cmd of the HBNB command interpreter"""
 
     def setUp(self):
+        """set up test"""
         try:
             os.rename("file.json", "tmp")
         except IOError:
@@ -407,6 +408,7 @@ class TestHBNBCommand_all(unittest.TestCase):
         FileStorage._FileStorage__objects = {}
 
     def tearDown(self):
+        """tear down test"""
         try:
             os.remove("file.json")
         except IOError:
@@ -417,17 +419,20 @@ class TestHBNBCommand_all(unittest.TestCase):
             pass
 
     def test_all_no_classes(self):
+        """test no classes"""
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("all User")
             self.assertEqual('[]', output.getvalue().strip())
 
     def test_all_invalid_classes(self):
+        """test all classes"""
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("all MyModel")
             self.assertEqual("** class doesn't exist **",
                              output.getvalue().strip())
 
     def test_all_classes_available(self):
+        """test all classes"""
         with patch("sys.stdout", new=StringIO()) as output:
             HBNBCommand().onecmd("create User")
             HBNBCommand().onecmd("create BaseModel")
