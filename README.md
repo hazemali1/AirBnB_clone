@@ -1,5 +1,4 @@
 # 0x00. AirBnB Clone - The Console
-
 ![AirBnB Clone Logo](https://camo.githubusercontent.com/59589bd21e8ec09ef94f2d9bb80d36d144bc487fe4737f8b213d005f3273921b/68747470733a2f2f696d6775722e636f6d2f4f696c457358562e706e67)
 
 This is the README file for the **0x00. AirBnB Clone - The Console** project. This project is part of the Holberton School curriculum and aims to create a simple command-line interface (CLI) for managing and interacting with objects in a clone of the Airbnb website.
