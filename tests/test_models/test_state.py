@@ -66,8 +66,8 @@ class test_for_State(unittest.TestCase):
         test for the class
         """
         d = datetime.today()
-        s =  State(id="zoome", created_at=d.isoformat(),
-                       updated_at=d.isoformat())
+        s = State(id="zoome", created_at=d.isoformat(),
+                  updated_at=d.isoformat())
         self.assertEqual(s.id, "zoome")
         self.assertEqual(s.created_at, d)
         self.assertEqual(s.updated_at, d)

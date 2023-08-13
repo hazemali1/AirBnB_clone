@@ -66,8 +66,8 @@ class test_for_User(unittest.TestCase):
         test for the class
         """
         d = datetime.today()
-        s =  User(id="zoome", created_at=d.isoformat(),
-                       updated_at=d.isoformat())
+        s = User(id="zoome", created_at=d.isoformat(),
+                 updated_at=d.isoformat())
         self.assertEqual(s.id, "zoome")
         self.assertEqual(s.created_at, d)
         self.assertEqual(s.updated_at, d)

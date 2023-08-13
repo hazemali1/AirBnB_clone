@@ -67,7 +67,7 @@ class test_for_Place(unittest.TestCase):
         """
         d = datetime.today()
         s = Place(id="zoome", created_at=d.isoformat(),
-                       updated_at=d.isoformat())
+                  updated_at=d.isoformat())
         self.assertEqual(s.id, "zoome")
         self.assertEqual(s.created_at, d)
         self.assertEqual(s.updated_at, d)
