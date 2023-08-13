@@ -21,7 +21,7 @@ class Test_for_file_stoarge(unittest.TestCase):
     """
     class testing filestorage
     """
-    
+
     def test_for_type_storage(self):
         """
         type stoarge
@@ -294,6 +294,49 @@ class Test_for_file_stoarge(unittest.TestCase):
         models.storage.reload()
         d = "{}.{}".format(s.__class__.__name__, s.id)
         self.assertIn(d, models.storage.all())
+
+    def test_for_all(self):
+        """
+        testing for all
+        """
+        s = models.storage.all()
+        self.assertIsNotNone(s)
+        self.assertEqual(type(s), dict)
+        self.assertIs(s, models.storage._FileStorage__objects)
+
+    def test_for_empty(self):
+        """
+        empty storage
+        """
+        self.assertIsNotNone(models.storage.all())
+
+    def test_for_json_load(self):
+        """
+        load
+        """
+        with open("file.json") as s:
+            d = json.load(s)
+            self.assertEqual(isinstance(d, dict), True)
+
+    def test_for_existence(self):
+        """
+        existence
+        """
+        with open("file.json") as s:
+            self.assertTrue(len(s.read()) > 0)
+
+    def test_for_docstrings(self):
+        """
+        docstrings
+        """
+        self.assertTrue(FileStorage.all.__doc__)
+        self.assertTrue(hasattr(FileStorage, 'all'))
+        self.assertTrue(FileStorage.new.__doc__)
+        self.assertTrue(hasattr(FileStorage, 'new'))
+        self.assertTrue(FileStorage.save.__doc__)
+        self.assertTrue(hasattr(FileStorage, 'save'))
+        self.assertTrue(FileStorage.reload.__doc__)
+        self.assertTrue(hasattr(FileStorage, 'reload'))
 
 
 if __name__ == "__main__":
