@@ -49,6 +49,7 @@ cd airbnb_clone
 
 1. Run the console by executing `./console.py`.
 2. You will enter the interactive command-line interface.
+
 3. Use various commands to interact with objects and manage the Airbnb clone.
 
 ## Command Examples
