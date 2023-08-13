@@ -2,6 +2,7 @@
 """
 test for filestorage
 """
+import os
 from models.engine.file_storage import FileStorage
 import unittest
 import models
@@ -18,6 +19,7 @@ class Test_for_file_stoarge(unittest.TestCase):
     """
     class testing filestorage
     """
+
     def test_for_file_path_type(self):
         """
         file_path type
