@@ -11,7 +11,7 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 class_dict = {"BaseModel": BaseModel, "User": User, "Place": Place,
-              "State": State}
+              "State": State, "City": City}
 
 
 class FileStorage:
