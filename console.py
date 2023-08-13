@@ -137,7 +137,7 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
         else:
             for k, v in date_base.items():
-                if v.id == q[1]:
+                if v.id == q[1] and v.__class__.__name__ == q[0]:
                     b = 2
                     del date_base[k]
                     storage.save()
