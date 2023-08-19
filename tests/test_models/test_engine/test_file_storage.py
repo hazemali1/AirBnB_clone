@@ -338,6 +338,13 @@ class Test_for_file_stoarge(unittest.TestCase):
         self.assertTrue(FileStorage.reload.__doc__)
         self.assertTrue(hasattr(FileStorage, 'reload'))
 
+    def test_for_call_reload(self):
+        """
+        reload
+        """
+    s =  models.storage
+    s.reload()
+
 
 if __name__ == "__main__":
     unittest.main()
