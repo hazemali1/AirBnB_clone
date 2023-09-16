@@ -58,3 +58,61 @@ footer {
     background: url(/web_static/images/icon_bath.jpg) no-repeat 20px top;
     padding-top: 50px;
 }
+
+.places .Amenities,
+.places .reviews {
+  margin-top: 40px;
+  width: 100%;
+  height: inherit;
+}
+
+.places .Amenities ul,
+.places .reviews ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.places .Amenities h2,
+.places .reviews h2 {
+  font-size: 16px;
+  text-align: left;
+  border-bottom: 1px solid #DDDDDD;
+}
+
+.places .reviews h3 {
+  font-size: 14px;
+}
+
+.places .reviews p {
+  font-size: 12px;
+}
+
+.places .Amenities ul li{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: center;
+  margin-bottom: 10px;
+  align-items: end;
+  }
+
+.pet_friendly {
+  background-image: url(../images/icon_pets.png);
+}
+.tv {
+  background-image: url(../images/icon_tv.png);
+}
+.wifi {
+  background-image: url(../images/icon_wifi.png);
+}
+
+.pet_friendly,
+.tv,
+.wifi {
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin-right: 5px;
+}
